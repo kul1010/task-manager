@@ -27,7 +27,7 @@ It exposes a RESTful API to manage tasks with properties: **ID, Title, Descripti
 }
 
 6. Start the Server
-    npx ts-node src/server.ts
+    npm run dev
 7. The API will be available at
     http://localhost:4000
     

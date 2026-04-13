@@ -1,0 +1,9 @@
+server:
+  port: 4000
+
+jwt:
+  secret: super-secret-key
+  expiresIn: 1h
+
+cors:
+  origin: "*"

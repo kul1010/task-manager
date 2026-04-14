@@ -4,15 +4,19 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/material": "^9.0.0",
     "jwt-decode": "^4.0.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.22.3",
     "vite-plugin-yaml": "^1.0.5",
     "zod": "^3.0.0",
     "zustand": "^4.0.0"
@@ -20,7 +24,7 @@
   "devDependencies": {
     "@rollup/plugin-yaml": "^4.1.2",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
+    "@testing-library/react": "^14.3.1",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/react": "^18.0.0",

@@ -14,32 +14,58 @@ export default function RegisterPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
+  
     const sanitizedForm = sanitizeForm(form);
     const result = registerSchema.safeParse(sanitizedForm);
-
+  
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
-      result.error.issues.forEach(issue => {
-        if (issue.path[0]) fieldErrors[issue.path[0] as string] = issue.message;
+  
+      result.error.issues.forEach((issue) => {
+        const field = issue.path[0] as string;
+  
+        // ✅ IMPORTANT FIX:
+        // Keep the FIRST error for each field (do not overwrite)
+        if (field && !fieldErrors[field]) {
+          fieldErrors[field] = issue.message;
+        }
       });
+  
       setErrors(fieldErrors);
       return;
     }
-
+  
     setErrors({});
+  
     const res = await fetch("http://localhost:4000/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(sanitizedForm),
     });
+  
     const data = await res.json();
-
+  
     if (data.error) {
-      setSnackbar({ open: true, message: data.error, severity: "error" });
+      setSnackbar({
+        open: true,
+        message: data.error,
+        severity: "error",
+      });
     } else {
-      setForm({ firstName: "", lastName: "", email: "", username: "", password: "" });
-      setSnackbar({ open: true, message: "Registration successful, redirecting to login...", severity: "success" });
+      setForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+        username: "",
+        password: "",
+      });
+  
+      setSnackbar({
+        open: true,
+        message: "Registration successful, redirecting to login...",
+        severity: "success",
+      });
+  
       setTimeout(() => navigate("/login"), 2000);
     }
   }
@@ -53,7 +79,7 @@ export default function RegisterPage() {
       <TextField label="Last Name" fullWidth margin="normal" value={form.lastName}
         onChange={e => setForm({ ...form, lastName: e.target.value })}
         error={!!errors.lastName} helperText={errors.lastName} />
-      <TextField label="Email" type="email" fullWidth margin="normal" value={form.email}
+      <TextField label="Email" fullWidth margin="normal" value={form.email}
         onChange={e => setForm({ ...form, email: e.target.value })}
         error={!!errors.email} helperText={errors.email} />
       <TextField label="Username" fullWidth margin="normal" value={form.username}

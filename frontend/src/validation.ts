@@ -1,11 +1,29 @@
 import { z } from "zod";
 
 export const registerSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().min(1, "Email is required").email("Invalid email format"),
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
+  firstName: z.string().trim().nonempty("First name is required"),
+
+  lastName: z.string().trim().nonempty("Last name is required"),
+
+  email: z.string().trim().superRefine((value, ctx) => {
+    if (!value) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Email is required",
+      });
+      return;
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(value)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Invalid email format",
+      });
+    }
+  }),
+  username: z.string().trim().nonempty("Username is required"),
+
+  password: z.string().trim().nonempty("Password is required"),
 });
 
 export const loginSchema = z.object({

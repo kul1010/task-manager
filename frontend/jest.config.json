@@ -1,6 +1,8 @@
 {
-    "preset": "ts-jest",
-    "testEnvironment": "jsdom",
-    "setupFilesAfterEnv": ["<rootDir>/tests/setupTests.ts"],
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx"]
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": ["<rootDir>/tests/setupTests.ts"],
+  "transform": {
+    "^.+\\.(ts|tsx)$": ["ts-jest", { "tsconfig": "tsconfig.test.json" }]
   }
+}

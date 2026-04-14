@@ -92,6 +92,7 @@ app.post("/tasks", authenticate, validateTask, (req, res) => {
 
 app.patch("/tasks/:id", authenticate, (req, res) => {
   const id = parseInt(req.params.id, 10);
+  
   const task = tasks.find(t => t.id === id);
   if (!task) return res.status(404).json({ error: "Task not found" });
   Object.assign(task, req.body);
